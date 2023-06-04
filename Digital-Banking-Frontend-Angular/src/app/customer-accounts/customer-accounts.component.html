@@ -1,0 +1,41 @@
+<div class="card-body m-5 mt-4">
+  <ng-container *ngIf="accounts | async as listAccounts; else failureOrLading">
+    <div class="card bg-light mb-3" style="margin-top: 60px">
+      <div class="card-header"><b>Accounts</b></div>
+      <div class="card-body ">
+        <table class="table table-hover" style="margin-top: 20px">
+          <thead>
+          <tr>
+            <th>ID</th><th>Type</th><th>Balance</th><th>Découvert</th><th>Taux d'intérêt %</th><th>Date de création</th><th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let a of listAccounts">
+            <td>{{a.id}}</td>
+            <td>{{a.type}}</td>
+            <td>{{a.balance}}</td>
+            <td>{{a.overDraft}}</td>
+            <td>{{a.interestRate}}</td>
+            <td>{{a.createdAt.split('T', 1)}}</td>
+            <td>
+              <button class="btn btn-outline-info" (click)="accountOperations(a)">
+                Operations
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #failureOrLading>
+    <ng-container *ngIf="errorMessage; else loading">
+      <div class="text-danger">
+        {{errorMessage}}
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      Loading .....
+    </ng-template>
+  </ng-template>
+</div>
